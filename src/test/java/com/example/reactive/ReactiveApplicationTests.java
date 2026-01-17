@@ -3,7 +3,9 @@ package com.example.reactive;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -11,18 +13,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.reactive.controller.HelloActions;
 
-@WebMvcTest(HelloActions.class)
+@WebFluxTest(HelloActions.class)
 class ReactiveApplicationTests {
 
 	@Autowired
-	private MockMvc mockMvc;
+	private WebTestClient webTestClient;
 
 	@Test
-	void shouldReturnHello() throws Exception {
-		mockMvc
-		.perform(get("/hello"))
-		.andExpect(status().isOk())
-		.andExpect(content().string("Hello, Github Actions!!"));
+	void shouldReturnHello() {
+		webTestClient.get()
+		.uri("/hello")
+		.exchange()
+		.expectStatus().isOk()
+		.expectBody(String.class)
+		.isEqualTo("Hello, Github Actions!!");
 	}
 
 }
