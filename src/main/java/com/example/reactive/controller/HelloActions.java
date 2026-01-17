@@ -8,7 +8,7 @@ public class HelloActions {
     
 
     @GetMapping("/hello")
-    public String helloActions() {
+    public String hello() {
         return "Hello, Github Actions!!";
     }
 
