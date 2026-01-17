@@ -9,7 +9,7 @@ public class HelloActions {
 
     @GetMapping("/")
     public String helloActions() {
-        return "Hello, Actions";
+        return "Hello, Github Actions";
     }
 
 }
